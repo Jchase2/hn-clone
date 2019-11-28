@@ -14,36 +14,35 @@ class StoryComponent extends Component {
         this.setTopStoryIds = this.setTopStoryIds.bind(this);
     }
 
-    setTopStoryIds(topStoryIds){
+    setTopStoryIds(topStoryIds) {
         this.setState({ topStoryIds })
     }
 
-    setPosts(postsArray){
+    setPosts(postsArray) {
         this.setState({ postsArray })
     }
 
     componentDidMount() {
-        api.getStoryIds()
-        .then(
-            result => {this.setTopStoryIds(result);
-            api.getPosts(result)
-            .then(result => this.setPosts(result))
+        api.getStoryIds().then(
+            result => {
+                this.setTopStoryIds(result);
+                api.getPosts(result)
+                    .then(result => {
+                        this.setPosts(result) 
+                    })
+            })
+            .catch(error => this.setState({ error }))
             .finally(this.setState({isLoading: false}))
-        }) 
-        .catch(error => this.setState({ error }))
-        .finally(this.setState({
-            isLoading: false
-        }))
     }
 
-    render(){
+    render() {
         return (
             <div>
                 <p>Story Id's:</p>
-                {this.state.isLoading === true ? <p>Loading...</p> : JSON.stringify(this.state.topStoryIds)}
+                {this.state.isLoading ? <p>Loading...</p> : JSON.stringify(this.state.topStoryIds)}
                 <div>
                     <p>Posts: </p>
-                    {this.state.isLoading === true ? <p>Loading...</p> : JSON.stringify(this.state.postsArray)}
+                    {this.state.isLoading ? <p>Loading...</p> : JSON.stringify(this.state.postsArray)}
                 </div>
             </div>
         );
