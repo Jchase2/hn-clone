@@ -1,10 +1,10 @@
 import React from 'react';
-import Api from './utils/Api'
+import StoryComponent from './components/StoryComponent';
 
 function App() {
   return (
     <div>
-      <Api />
+      <StoryComponent />
     </div>
   );
 }
