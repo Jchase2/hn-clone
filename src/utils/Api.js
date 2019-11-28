@@ -18,8 +18,10 @@ export async function getItem(id) {
 export async function getPosts(idArray){
   const returnList = await Promise.all(
     idArray.map(id => 
-      axios.get(`${base_api}item/${id}${append_pretty}`)
+      axios.get(`${base_api}item/${id}${append_pretty}`).then(response => {
+        return response.data
+      })
     )
   );
-  return returnList
+  return await returnList
 }

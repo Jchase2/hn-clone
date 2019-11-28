@@ -20,6 +20,7 @@ class StoryComponent extends Component {
 
     setPosts(postsArray) {
         this.setState({ postsArray })
+        this.setState({isLoading: false})
     }
 
     componentDidMount() {
@@ -32,7 +33,10 @@ class StoryComponent extends Component {
                     })
             })
             .catch(error => this.setState({ error }))
-            .finally(this.setState({isLoading: false}))
+    }
+
+    renderStory(){
+
     }
 
     render() {
@@ -42,7 +46,7 @@ class StoryComponent extends Component {
                 {this.state.isLoading ? <p>Loading...</p> : JSON.stringify(this.state.topStoryIds)}
                 <div>
                     <p>Posts: </p>
-                    {this.state.isLoading ? <p>Loading...</p> : JSON.stringify(this.state.postsArray)}
+                    {this.state.isLoading ? <p>Loading...</p> : JSON.stringify(this.state.postsArray[0])}
                 </div>
             </div>
         );
