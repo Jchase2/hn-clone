@@ -12,6 +12,7 @@ class StoryComponent extends Component {
             postsArray: null
         }
         this.setTopStoryIds = this.setTopStoryIds.bind(this);
+        this.renderCard = this.renderCard.bind(this);
     }
 
     setTopStoryIds(topStoryIds) {
@@ -20,7 +21,7 @@ class StoryComponent extends Component {
 
     setPosts(postsArray) {
         this.setState({ postsArray })
-        this.setState({isLoading: false})
+        this.setState({ isLoading: false })
     }
 
     componentDidMount() {
@@ -29,14 +30,24 @@ class StoryComponent extends Component {
                 this.setTopStoryIds(result);
                 api.getPosts(result)
                     .then(result => {
-                        this.setPosts(result) 
+                        this.setPosts(result)
                     })
             })
             .catch(error => this.setState({ error }))
     }
 
-    renderStory(){
-
+    renderCard() {
+        if (!this.state.isLoading) {
+            return (
+                <div>
+                    <p>Title: {this.state.postsArray[0].title}</p>
+                    <p>by: {this.state.postsArray[0].by} on: {new Date(this.state.postsArray[0].time * 1000).toDateString()} with {this.state.postsArray[0].descendants} comments.</p>
+                </div>
+            );
+        }
+        else{
+            return <p>Loading...</p>
+        }
     }
 
     render() {
@@ -45,8 +56,8 @@ class StoryComponent extends Component {
                 <p>Story Id's:</p>
                 {this.state.isLoading ? <p>Loading...</p> : JSON.stringify(this.state.topStoryIds)}
                 <div>
-                    <p>Posts: </p>
-                    {this.state.isLoading ? <p>Loading...</p> : JSON.stringify(this.state.postsArray[0])}
+                    <p>Post: </p>
+                    {this.renderCard()}
                 </div>
             </div>
         );
