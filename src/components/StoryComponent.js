@@ -41,7 +41,7 @@ class StoryComponent extends Component {
             <Card.Group>
                 <Card fluid color='red'>
                     <Card.Content>
-                        <Card.Header>{this.state.postsArray[0].title}</Card.Header>
+                        <Card.Header><a href={this.state.postsArray[0].url}>{this.state.postsArray[0].title}</a></Card.Header>
                         <Card.Description>
                             <p>by: {this.state.postsArray[0].by} on: {new Date(this.state.postsArray[0].time * 1000).toDateString()} with {this.state.postsArray[0].descendants} comments.</p>
                         </Card.Description>
@@ -57,7 +57,7 @@ class StoryComponent extends Component {
             return (
                 <React.Fragment>
                     <Grid centered={true}>
-                        <Grid.Column width={10}>
+                        <Grid.Column width={12}>
                             {this.renderCard()}
                         </Grid.Column>
                     </Grid>
