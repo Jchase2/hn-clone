@@ -55,13 +55,7 @@ class StoryComponent extends Component {
     render() {
         if (!this.state.isLoading) {
             return (
-                <React.Fragment>
-                    <Grid centered={true}>
-                        <Grid.Column width={12}>
-                            {this.renderCard()}
-                        </Grid.Column>
-                    </Grid>
-                </React.Fragment>
+                this.renderCard() 
             );
         }
         else {

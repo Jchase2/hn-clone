@@ -28,12 +28,16 @@ function App() {
           </Grid>
         </nav>
         <Switch>
-          <Route path="/test">
-            <Test />
-          </Route>
-          <Route path="/">
-            <StoryComponent />
-          </Route>
+          <Grid centered={true}>
+            <Grid.Column width={12}>
+              <Route path="/test">
+                <Test />
+              </Route>
+              <Route path="/">
+                <StoryComponent />
+              </Route>
+            </Grid.Column>
+          </Grid>
         </Switch>
       </div>
     </Router>
