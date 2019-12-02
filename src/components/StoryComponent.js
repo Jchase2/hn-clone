@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as api from '../utils/Api';
-
+import { Card, Grid } from 'semantic-ui-react';
 
 class StoryComponent extends Component {
 
@@ -37,32 +37,37 @@ class StoryComponent extends Component {
     }
 
     renderCard() {
-        if (!this.state.isLoading) {
-            return (
-                <div>
-                    <p>Title: {this.state.postsArray[0].title}</p>
-                    <p>by: {this.state.postsArray[0].by} on: {new Date(this.state.postsArray[0].time * 1000).toDateString()} with {this.state.postsArray[0].descendants} comments.</p>
-                </div>
-            );
-        }
-        else{
-            return <p>Loading...</p>
-        }
-    }
-
-    render() {
         return (
-            <div>
-                <p>Story Id's:</p>
-                {this.state.isLoading ? <p>Loading...</p> : JSON.stringify(this.state.topStoryIds)}
-                <div>
-                    <p>Post: </p>
-                    {this.renderCard()}
-                </div>
-            </div>
+            <Card.Group>
+                <Card fluid color='red'>
+                    <Card.Content>
+                        <Card.Header>{this.state.postsArray[0].title}</Card.Header>
+                        <Card.Description>
+                            <p>by: {this.state.postsArray[0].by} on: {new Date(this.state.postsArray[0].time * 1000).toDateString()} with {this.state.postsArray[0].descendants} comments.</p>
+                        </Card.Description>
+                    </Card.Content>
+                </Card>
+            </Card.Group>
         );
     }
 
+
+    render() {
+        if (!this.state.isLoading) {
+            return (
+                <React.Fragment>
+                    <Grid centered={true}>
+                        <Grid.Column width={10}>
+                            {this.renderCard()}
+                        </Grid.Column>
+                    </Grid>
+                </React.Fragment>
+            );
+        }
+        else {
+            return <p>Loading...</p>
+        }
+    }
 }
 
 export default StoryComponent;
