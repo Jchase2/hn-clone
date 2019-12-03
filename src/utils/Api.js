@@ -45,12 +45,12 @@ export async function getPosts(idArray) {
     return returnList.filter((item) => !!item && item.type === "story" && !item.deleted).slice(0, 50)
   }
   else {
-    return returnList.filter((item) => item.type === "story" && !item.deleted)
+    return returnList.filter((item) => !!item && item.type === "story" && !item.deleted)
   }
 }
 
-// Pretty much the same as getPosts except it has a much higher limit of comments...
-export async function getComments(idArray) {
+// Pretty much the same as getPosts except unlimited comments...
+export async function getComments(idArray){
   const returnList = await Promise.all(
     idArray.map(id =>
       axios.get(`${base_api}item/${id}${append_pretty}`).then(response => {
@@ -58,10 +58,5 @@ export async function getComments(idArray) {
       })
     )
   );
-  if (returnList.length > 3000) {
-    return returnList.filter((item) => !!item && item.type === "story" && !item.deleted).slice(0, 3000)
-  }
-  else {
-    return returnList.filter((item) =>  !!item && item.type === "story" && !item.deleted)
-  }
+  return returnList;
 }
