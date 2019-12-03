@@ -24,16 +24,9 @@ class NewComponent extends Component {
         this.setState({ isLoading: false })
     }
 
-    componentDidMount() {
-        api.getNewStoryIds().then(
-            result => {
-                this.setNewStoryIds(result);
-                api.getPosts(result)
-                    .then(result => {
-                        this.setPosts(result)
-                    })
-            })
-            .catch(error => this.setState({ error }))
+    async componentDidMount() {
+        await api.getNewStoryIds().then(result => { this.setNewStoryIds(result) })
+        await api.getPosts(this.state.newStoryIds).then(result => { this.setPosts(result) })
     }
 
     render() {

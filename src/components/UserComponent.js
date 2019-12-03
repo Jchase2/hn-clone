@@ -26,17 +26,9 @@ class UserComponent extends Component {
         this.setState({ postsArray: posts })
     }
 
-    componentDidMount() {
-        api.getUser(this.props.match.params.id).then(
-            results => {
-                this.setUser(results)
-                api.getPosts(this.state.activeUser.submitted).then(
-                    results => {
-                        this.setPosts(results)
-                    }   
-                )
-            }
-        )
+    async componentDidMount() {
+        await api.getUser(this.props.match.params.id).then(results => {this.setUser(results)})
+        await api.getPosts(this.state.activeUser.submitted).then(results => {this.setPosts(results)})
     }
 
     renderCard() {

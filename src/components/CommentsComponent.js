@@ -27,17 +27,9 @@ class CommentsComponent extends Component {
         this.setState({ activePost: obj })
     }
 
-    componentDidMount() {
-        api.getItem(this.props.match.params.id).then(
-            results => {
-                this.setActivePost(results)
-                api.getComments(results.kids).then(
-                    results => {
-                        this.setComments(results)
-                    }
-                )
-            }
-        )
+    async componentDidMount() {
+        await api.getItem(this.props.match.params.id).then(results => { this.setActivePost(results) })
+        await api.getComments(this.state.activePost.kids).then(results => { this.setComments(results) })
     }
 
     renderCard() {
@@ -86,6 +78,7 @@ class CommentsComponent extends Component {
             return (
                 <React.Fragment>
                     {this.renderUserCard()}
+                    <h3>Comments</h3>
                     {this.renderCard()}
                 </React.Fragment>
             );

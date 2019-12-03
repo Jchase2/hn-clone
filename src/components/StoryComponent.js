@@ -24,16 +24,9 @@ class StoryComponent extends Component {
         this.setState({ isLoading: false })
     }
 
-    componentDidMount() {
-        api.getTopStoryIds().then(
-            result => {
-                this.setTopStoryIds(result);
-                api.getPosts(result)
-                    .then(result => {
-                        this.setPosts(result)
-                    })
-            })
-            .catch(error => this.setState({ error }))
+    async componentDidMount() {
+        await api.getTopStoryIds().then(result => { this.setTopStoryIds(result) })
+        await api.getPosts(this.state.topStoryIds).then(result => { this.setPosts(result) })
     }
 
     render() {
