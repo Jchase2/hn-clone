@@ -19,6 +19,11 @@ class UserComponent extends Component {
         let activeUser = await api.getUser(this.props.match.params.id);
         this.setState({ activeUser })
         this.setState({isLoadingUser: false})
+        // Without this if statement, the getPosts method will recieve potentially thousands of 
+        // get requests, crashing the browser. 
+        if (activeUser.submitted.length >= 50){
+            activeUser.submitted = activeUser.submitted.slice(0, 50)
+        }
         await api.getPosts(activeUser.submitted).then(postsArray => this.setState({ postsArray }));
         this.setState({ isLoadingPost: false })
       }

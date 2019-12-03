@@ -14,12 +14,12 @@ class CommentsComponent extends Component {
         }
         this.renderUserCard = this.renderUserCard.bind(this);
     }
-    
+
     async componentDidMount() {
         let activePost = await api.getItem(this.props.match.params.id);
         this.setState({ activePost })
         this.setState({isLoadingUser: false})
-        await api.getPosts(activePost.kids).then(commentsArray => this.setState({ commentsArray }))
+        await api.getComments(activePost.kids).then(commentsArray => this.setState({ commentsArray }))
         this.setState({ isLoadingComments: false })
       }
 
