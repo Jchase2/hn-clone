@@ -13,23 +13,12 @@ class UserComponent extends Component {
             activeUser: null,
             postsArray: []
         }
-        this.setUser = this.setUser.bind(this);
-        this.setPosts = this.setPosts.bind(this);
-    }
-
-
-    setUser(user) {
-        this.setState({ activeUser: user })
-    }
-
-    setPosts(posts) {
-        this.setState({ postsArray: posts })
     }
 
     async componentDidMount() {
-        await api.getUser(this.props.match.params.id).then(results => {this.setUser(results)})
+        await api.getUser(this.props.match.params.id).then(activeUser => this.setState({ activeUser }))
         this.setState({ isLoadingUser: false })
-        await api.getPosts(this.state.activeUser.submitted).then(results => {this.setPosts(results)})
+        await api.getPosts(this.state.activeUser.submitted).then(postsArray => this.setState({ postsArray }))
         this.setState({ isLoadingPost: false })
     }
 

@@ -11,21 +11,11 @@ class NewComponent extends Component {
             newStoryIds: [],
             postsArray: []
         }
-        this.setNewStoryIds = this.setNewStoryIds.bind(this);
-        this.setPosts = this.setPosts.bind(this);
-    }
-
-    setNewStoryIds(newStoryIds) {
-        this.setState({ newStoryIds })
-    }
-
-    setPosts(postsArray) {
-        this.setState({ postsArray })
     }
 
     async componentDidMount() {
-        await api.getNewStoryIds().then(result => { this.setNewStoryIds(result) })
-        await api.getPosts(this.state.newStoryIds).then(result => { this.setPosts(result) })
+        await api.getNewStoryIds().then(newStoryIds => this.setState({ newStoryIds }))
+        await api.getPosts(this.state.newStoryIds).then(postsArray =>  this.setState({ postsArray }))
         this.setState({ isLoading: false })
     }
 

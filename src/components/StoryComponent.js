@@ -11,21 +11,11 @@ class StoryComponent extends Component {
             topStoryIds: null,
             postsArray: null
         }
-        this.setTopStoryIds = this.setTopStoryIds.bind(this);
-        this.setPosts = this.setPosts.bind(this);
-    }
-
-    setTopStoryIds(topStoryIds) {
-        this.setState({ topStoryIds })
-    }
-
-    setPosts(postsArray) {
-        this.setState({ postsArray })
     }
 
     async componentDidMount() {
-        await api.getTopStoryIds().then(result => { this.setTopStoryIds(result) })
-        await api.getPosts(this.state.topStoryIds).then(result => { this.setPosts(result) })
+        await api.getTopStoryIds().then(topStoryIds => this.setState({ topStoryIds }))
+        await api.getPosts(this.state.topStoryIds).then(postsArray => this.setState({ postsArray }))
         this.setState({ isLoading: false })
     }
 

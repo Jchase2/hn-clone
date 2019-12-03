@@ -12,25 +12,14 @@ class CommentsComponent extends Component {
             commentsArray: [],
             activePost: null,
         }
-        this.setComments = this.setComments.bind(this);
-        this.setActivePost = this.setActivePost.bind(this);
         this.renderUserCard = this.renderUserCard.bind(this);
     }
-
-    setComments(comments) {
-        this.setState({ commentsArray: comments })
-    }
-
-    setActivePost(obj) {
-        this.setState({ activePost: obj })
-    }
-
+    
     async componentDidMount() {
-        await api.getItem(this.props.match.params.id).then(results => { this.setActivePost(results) })
+        await api.getItem(this.props.match.params.id).then(activePost => this.setState({ activePost }))
         this.setState({ isLoadingUser: false })
-        await api.getComments(this.state.activePost.kids).then(results => { this.setComments(results) })
+        await api.getComments(this.state.activePost.kids).then(commentsArray => this.setState({ commentsArray }))
         this.setState({ isLoadingComments: false })
-
     }
 
     renderCard() {
