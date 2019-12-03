@@ -2,6 +2,7 @@ import React from 'react';
 import StoryComponent from './components/StoryComponent';
 import UserComponent from './components/UserComponent';
 import NewComponent from './components/NewComponent';
+import CommentsComponent from './components/CommentsComponent';
 import {
   BrowserRouter as Router,
   Switch,
@@ -9,7 +10,6 @@ import {
   Link
 } from "react-router-dom";
 import { Menu, Grid } from 'semantic-ui-react'
-
 
 function App() {
   return (
@@ -39,6 +39,7 @@ function App() {
                 <StoryComponent />
               </Route>
               <Route exact path='/user/:id' component={UserComponent} />
+              <Route exact path='/post/:id' component={CommentsComponent} />
             </Grid.Column>
           </Grid>
         </Switch>

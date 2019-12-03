@@ -5,16 +5,11 @@ class RenderCard extends Component {
 
     constructor(props) {
         super(props)
-
         this.renderCard = this.renderCard.bind(this);
     }
 
     renderCard() {
-        let newArr = [];
-        for (var index = 0; index < this.props.postsArray.length; index++) {
-            newArr.push(this.props.postsArray[index]);
-        }
-        const listPosts = newArr.map((post) =>
+        const listPosts = this.props.postsArray.map((post) =>
             <List.Item key={post.id}>
                 <Card.Group>
                     <Card fluid color='red'>
@@ -23,7 +18,7 @@ class RenderCard extends Component {
                             <Card.Description>
                                 <p>By: <a href={'/user/' + post.by}>{post.by + ' '}</a>
                                     On: {new Date(post.time * 1000).toDateString() + ' '}
-                                    With {post.descendants} comments.</p>
+                                    With <a href={'/post/' + post.id}>{post.descendants}</a> comments.</p>
                             </Card.Description>
                         </Card.Content>
                     </Card>
