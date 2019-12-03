@@ -62,6 +62,6 @@ export async function getComments(idArray) {
     return returnList.filter((item) => !!item && item.type === "story" && !item.deleted).slice(0, 3000)
   }
   else {
-    return returnList.filter((item) => item.type === "story" && !item.deleted)
+    return returnList.filter((item) =>  !!item && item.type === "story" && !item.deleted)
   }
 }
