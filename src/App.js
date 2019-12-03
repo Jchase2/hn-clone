@@ -1,5 +1,7 @@
 import React from 'react';
 import StoryComponent from './components/StoryComponent';
+import UserComponent from './components/UserComponent';
+import NewComponent from './components/NewComponent';
 import {
   BrowserRouter as Router,
   Switch,
@@ -18,10 +20,10 @@ function App() {
             <Grid.Column width={12}>
               <Menu>
                 <Menu.Item name="home">
-                  <Link to="/">Home</Link>
+                  <Link to="/">Top Stories</Link>
                 </Menu.Item>
-                <Menu.Item name="test">
-                  <Link to="/test">Test</Link>
+                <Menu.Item name="new">
+                  <Link to="/test">Newest Stories</Link>
                 </Menu.Item>
               </Menu>
             </Grid.Column>
@@ -30,22 +32,19 @@ function App() {
         <Switch>
           <Grid centered={true}>
             <Grid.Column width={12}>
-              <Route path="/test">
-                <Test />
+              <Route exact path="/new">
+                <NewComponent />
               </Route>
-              <Route path="/">
+              <Route exact path="/">
                 <StoryComponent />
               </Route>
+              <Route exact path='/user/:id' component={UserComponent} />
             </Grid.Column>
           </Grid>
         </Switch>
       </div>
     </Router>
   );
-}
-
-function Test() {
-  return <h2>Test Page</h2>;
 }
 
 export default App;

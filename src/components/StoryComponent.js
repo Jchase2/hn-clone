@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as api from '../utils/Api';
-import { Card, Grid } from 'semantic-ui-react';
+import { Card } from 'semantic-ui-react';
 
 class StoryComponent extends Component {
 
@@ -43,7 +43,9 @@ class StoryComponent extends Component {
                     <Card.Content>
                         <Card.Header><a href={this.state.postsArray[0].url}>{this.state.postsArray[0].title}</a></Card.Header>
                         <Card.Description>
-                            <p>by: {this.state.postsArray[0].by} on: {new Date(this.state.postsArray[0].time * 1000).toDateString()} with {this.state.postsArray[0].descendants} comments.</p>
+                            <p>by: <a href={'/user/' + this.state.postsArray[0].by}>{this.state.postsArray[0].by}</a>
+                               on: {new Date(this.state.postsArray[0].time * 1000).toDateString()} 
+                               with {this.state.postsArray[0].descendants} comments.</p>
                         </Card.Description>
                     </Card.Content>
                 </Card>

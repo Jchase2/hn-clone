@@ -15,6 +15,12 @@ export async function getItem(id) {
   })
 }
 
+export async function getUser(id) {
+  return await axios.get(`${base_api}user/${id}${append_pretty}`).then(response => {
+    return response.data
+  })
+}
+
 export async function getPosts(idArray){
   const returnList = await Promise.all(
     idArray.map(id => 
