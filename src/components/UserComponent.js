@@ -8,7 +8,8 @@ class UserComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            isLoading: true,
+            isLoadingUser: true,
+            isLoadingPost: true,
             activeUser: null,
             postsArray: []
         }
@@ -19,7 +20,6 @@ class UserComponent extends Component {
 
     setUser(user) {
         this.setState({ activeUser: user })
-        this.setState({ isLoading: false })
     }
 
     setPosts(posts) {
@@ -28,7 +28,9 @@ class UserComponent extends Component {
 
     async componentDidMount() {
         await api.getUser(this.props.match.params.id).then(results => {this.setUser(results)})
+        this.setState({ isLoadingUser: false })
         await api.getPosts(this.state.activeUser.submitted).then(results => {this.setPosts(results)})
+        this.setState({ isLoadingPost: false })
     }
 
     renderCard() {
@@ -50,16 +52,16 @@ class UserComponent extends Component {
         );
     }
     render() {
-        if (!this.state.isLoading && this.state.activeUser && this.state.postsArray) {
+        if (!this.state.isLoadingUser && this.state.activeUser) {
             return (
                 <React.Fragment>
                     {this.renderCard()}
                     <h3>Posts</h3>
-                    <RenderCardComponent postsArray={this.state.postsArray} />
+                    {!this.state.isLoadingPost ? <RenderCardComponent postsArray={this.state.postsArray} /> : <p>Loading...</p>}
                 </React.Fragment>
             );
         }
-        else if (this.state.isLoading) {
+        else if (this.state.isLoadingUser) {
             return <p>Loading...</p>
         }
         else if (!this.state.activeUser) {

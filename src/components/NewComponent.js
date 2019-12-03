@@ -21,12 +21,12 @@ class NewComponent extends Component {
 
     setPosts(postsArray) {
         this.setState({ postsArray })
-        this.setState({ isLoading: false })
     }
 
     async componentDidMount() {
         await api.getNewStoryIds().then(result => { this.setNewStoryIds(result) })
         await api.getPosts(this.state.newStoryIds).then(result => { this.setPosts(result) })
+        this.setState({ isLoading: false })
     }
 
     render() {

@@ -7,7 +7,8 @@ class CommentsComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            isLoading: true,
+            isLoadingUser: true,
+            isLoadingComments: true,
             commentsArray: [],
             activePost: null,
         }
@@ -17,10 +18,7 @@ class CommentsComponent extends Component {
     }
 
     setComments(comments) {
-        this.setState({
-            commentsArray: comments,
-            isLoading: false
-        })
+        this.setState({ commentsArray: comments })
     }
 
     setActivePost(obj) {
@@ -29,7 +27,10 @@ class CommentsComponent extends Component {
 
     async componentDidMount() {
         await api.getItem(this.props.match.params.id).then(results => { this.setActivePost(results) })
+        this.setState({ isLoadingUser: false })
         await api.getComments(this.state.activePost.kids).then(results => { this.setComments(results) })
+        this.setState({ isLoadingComments: false })
+
     }
 
     renderCard() {
@@ -74,16 +75,16 @@ class CommentsComponent extends Component {
     }
 
     render() {
-        if (!this.state.isLoading && this.state.commentsArray) {
+        if (!this.state.isLoadingUser) {
             return (
                 <React.Fragment>
                     {this.renderUserCard()}
                     <h3>Comments</h3>
-                    {this.renderCard()}
+                    {!this.state.isLoadingComments ? this.renderCard() : <p>Loading...</p>}
                 </React.Fragment>
             );
         }
-        else if (this.state.isLoading) {
+        else if (this.state.isLoadingUser) {
             return <p>Loading...</p>
         }
         else if (!this.state.activePost) {
