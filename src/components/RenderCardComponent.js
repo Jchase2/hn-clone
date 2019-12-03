@@ -11,7 +11,7 @@ class RenderCard extends Component {
 
     renderCard() {
         let newArr = [];
-        for (var index = 0; index < 50; index++) {
+        for (var index = 0; index < this.props.postsArray.length; index++) {
             newArr.push(this.props.postsArray[index]);
         }
         const listPosts = newArr.map((post) =>
