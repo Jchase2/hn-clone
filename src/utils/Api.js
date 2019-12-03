@@ -3,8 +3,14 @@ import axios from 'axios';
 const base_api = "https://hacker-news.firebaseio.com/v0/";
 const append_pretty = ".json?print=pretty";
 
-export async function getStoryIds() {
+export async function getTopStoryIds() {
   return await axios.get(`${base_api}topstories${append_pretty}`).then(response => {
+    return response.data
+  })
+}
+
+export async function getNewStoryIds() {
+  return await axios.get(`${base_api}newstories${append_pretty}`).then(response => {
     return response.data
   })
 }

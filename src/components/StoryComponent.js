@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as api from '../utils/Api';
-import { Card } from 'semantic-ui-react';
+import RenderCard from './RenderCardComponent';
 
 class StoryComponent extends Component {
 
@@ -12,7 +12,7 @@ class StoryComponent extends Component {
             postsArray: null
         }
         this.setTopStoryIds = this.setTopStoryIds.bind(this);
-        this.renderCard = this.renderCard.bind(this);
+        this.setPosts = this.setPosts.bind(this);
     }
 
     setTopStoryIds(topStoryIds) {
@@ -25,7 +25,7 @@ class StoryComponent extends Component {
     }
 
     componentDidMount() {
-        api.getStoryIds().then(
+        api.getTopStoryIds().then(
             result => {
                 this.setTopStoryIds(result);
                 api.getPosts(result)
@@ -36,32 +36,17 @@ class StoryComponent extends Component {
             .catch(error => this.setState({ error }))
     }
 
-    renderCard() {
-        return (
-            <Card.Group>
-                <Card fluid color='red'>
-                    <Card.Content>
-                        <Card.Header><a href={this.state.postsArray[0].url}>{this.state.postsArray[0].title}</a></Card.Header>
-                        <Card.Description>
-                            <p>by: <a href={'/user/' + this.state.postsArray[0].by}>{this.state.postsArray[0].by}</a>
-                               on: {new Date(this.state.postsArray[0].time * 1000).toDateString()} 
-                               with {this.state.postsArray[0].descendants} comments.</p>
-                        </Card.Description>
-                    </Card.Content>
-                </Card>
-            </Card.Group>
-        );
-    }
-
-
     render() {
         if (!this.state.isLoading) {
             return (
-                this.renderCard() 
+                <RenderCard postsArray={this.state.postsArray} />
             );
         }
-        else {
+        else if (this.state.isLoading) {
             return <p>Loading...</p>
+        }
+        else {
+            return <p>Something went wrong!</p>
         }
     }
 }

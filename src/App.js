@@ -23,7 +23,7 @@ function App() {
                   <Link to="/">Top Stories</Link>
                 </Menu.Item>
                 <Menu.Item name="new">
-                  <Link to="/test">Newest Stories</Link>
+                  <Link to="/new">Newest Stories</Link>
                 </Menu.Item>
               </Menu>
             </Grid.Column>
