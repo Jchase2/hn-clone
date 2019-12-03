@@ -16,11 +16,12 @@ class UserComponent extends Component {
     }
 
     async componentDidMount() {
-        await api.getUser(this.props.match.params.id).then(activeUser => this.setState({ activeUser }))
-        this.setState({ isLoadingUser: false })
-        await api.getPosts(this.state.activeUser.submitted).then(postsArray => this.setState({ postsArray }))
+        let activeUser = await api.getUser(this.props.match.params.id);
+        this.setState({ activeUser })
+        this.setState({isLoadingUser: false})
+        await api.getPosts(activeUser.submitted).then(postsArray => this.setState({ postsArray }));
         this.setState({ isLoadingPost: false })
-    }
+      }
 
     renderCard() {
         return (
@@ -41,12 +42,12 @@ class UserComponent extends Component {
         );
     }
     render() {
-        if (!this.state.isLoadingUser && this.state.activeUser) {
+        if (!this.state.isLoadingUser && this.state.activeUser != null) {
             return (
                 <React.Fragment>
                     {this.renderCard()}
                     <h3>Posts</h3>
-                    {!this.state.isLoadingPost ? <RenderCardComponent postsArray={this.state.postsArray} /> : <p>Loading...</p>}
+                    {!this.state.isLoadingPost && this.state.postsArray ? <RenderCardComponent postsArray={this.state.postsArray} /> : <p>Loading...</p>}
                 </React.Fragment>
             );
         }

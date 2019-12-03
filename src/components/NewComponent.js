@@ -14,10 +14,11 @@ class NewComponent extends Component {
     }
 
     async componentDidMount() {
-        await api.getNewStoryIds().then(newStoryIds => this.setState({ newStoryIds }))
-        await api.getPosts(this.state.newStoryIds).then(postsArray =>  this.setState({ postsArray }))
+        let newStoryIds = await api.getNewStoryIds()
+        this.setState({ newStoryIds })
+        await api.getPosts(newStoryIds).then(postsArray => this.setState({ postsArray }));
         this.setState({ isLoading: false })
-    }
+      }
 
     render() {
         if (!this.state.isLoading) {

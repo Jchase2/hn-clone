@@ -42,7 +42,7 @@ export async function getPosts(idArray) {
     )
   );
   if (returnList.length > 50) {
-    return returnList.filter((item) => item.type === "story" && !item.deleted).slice(0, 50)
+    return returnList.filter((item) => !!item && item.type === "story" && !item.deleted).slice(0, 50)
   }
   else {
     return returnList.filter((item) => item.type === "story" && !item.deleted)

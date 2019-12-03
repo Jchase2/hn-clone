@@ -16,11 +16,12 @@ class CommentsComponent extends Component {
     }
     
     async componentDidMount() {
-        await api.getItem(this.props.match.params.id).then(activePost => this.setState({ activePost }))
-        this.setState({ isLoadingUser: false })
-        await api.getComments(this.state.activePost.kids).then(commentsArray => this.setState({ commentsArray }))
+        let activePost = await api.getItem(this.props.match.params.id);
+        this.setState({ activePost })
+        this.setState({isLoadingUser: false})
+        await api.getPosts(activePost.kids).then(commentsArray => this.setState({ commentsArray }))
         this.setState({ isLoadingComments: false })
-    }
+      }
 
     renderCard() {
         const listPosts = this.state.commentsArray.map((comment) =>

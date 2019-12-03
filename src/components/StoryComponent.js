@@ -14,8 +14,9 @@ class StoryComponent extends Component {
     }
 
     async componentDidMount() {
-        await api.getTopStoryIds().then(topStoryIds => this.setState({ topStoryIds }))
-        await api.getPosts(this.state.topStoryIds).then(postsArray => this.setState({ postsArray }))
+        let topStoryIds = await api.getTopStoryIds()
+        this.setState({ topStoryIds })
+        await api.getPosts(topStoryIds).then(postsArray => this.setState({ postsArray }));
         this.setState({ isLoading: false })
     }
 
